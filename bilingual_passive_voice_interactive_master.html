@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>受動態 Master: SVOO & SVOC Interactive Guide</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        svo: {
+                            s: '#ef4444', // Subject (Red)
+                            v: '#10b981', // Verb (Green)
+                            o1: '#3b82f6', // Obj 1 / Person (Blue)
+                            o2: '#f59e0b', // Obj 2 / Thing (Amber)
+                            c: '#8b5cf6'  // Complement (Purple)
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased font-sans min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 gradient-bg text-white rounded-xl shadow-md">
+                    <i class="fa-solid fa-language text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-none">受動態 Master Lab</h1>
+                    <p class="text-xs text-slate-500 mt-0.5">SVOO & SVOC Passive Voice Interactive</p>
+                </div>
+            </div>
+
+            <!-- Global Controls: Lang Toggle & Nav Tabs -->
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <nav class="hidden md:flex space-x-1 bg-slate-100 p-1 rounded-xl text-sm font-medium">
+                    <button onclick="switchTab('learn')" id="tab-btn-learn" class="px-3 py-1.5 rounded-lg transition-all shadow-sm bg-white text-brand-600 font-semibold">
+                        <i class="fa-solid fa-book-open mr-1.5"></i>解説 (Learn)
+                    </button>
+                    <button onclick="switchTab('practice')" id="tab-btn-practice" class="px-3 py-1.5 rounded-lg transition-all text-slate-600 hover:text-slate-900">
+                        <i class="fa-solid fa-pen-to-square mr-1.5"></i>演習 (Exercises)
+                    </button>
+                    <button onclick="switchTab('game')" id="tab-btn-game" class="px-3 py-1.5 rounded-lg transition-all text-slate-600 hover:text-slate-900">
+                        <i class="fa-solid fa-gamepad mr-1.5 text-amber-500"></i>ゲーム (Game)
+                    </button>
+                </nav>
+
+                <!-- Language Toggle Button -->
+                <button id="lang-toggle-btn" onclick="toggleLanguage()" class="flex items-center space-x-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all">
+                    <i class="fa-solid fa-globe text-brand-600"></i>
+                    <span id="lang-btn-text">EN / 日本語</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Bar -->
+        <div class="md:hidden flex border-t border-slate-200 bg-slate-50 text-xs text-center font-medium">
+            <button onclick="switchTab('learn')" id="mob-tab-btn-learn" class="flex-1 py-2.5 border-b-2 border-brand-600 text-brand-600 font-bold">
+                <i class="fa-solid fa-book-open block text-base mb-0.5"></i>解説
+            </button>
+            <button onclick="switchTab('practice')" id="mob-tab-btn-practice" class="flex-1 py-2.5 text-slate-500 border-b-2 border-transparent">
+                <i class="fa-solid fa-pen-to-square block text-base mb-0.5"></i>演習
+            </button>
+            <button onclick="switchTab('game')" id="mob-tab-btn-game" class="flex-1 py-2.5 text-slate-500 border-b-2 border-transparent">
+                <i class="fa-solid fa-gamepad block text-base mb-0.5 text-amber-500"></i>ゲーム
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ================= SECTION 1: LEARN (解説) ================= -->
+        <section id="sec-learn" class="space-y-8">
+            <!-- Hero Header -->
+            <div class="gradient-bg rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl">
+                    <i class="fa-solid fa-diagram-project"></i>
+                </div>
+                <div class="max-w-3xl relative z-10">
+                    <span class="inline-block bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-3">
+                        Grammar Station: Units 22 & 23
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight">
+                        <span class="lang-jp">第4・第5文型（SVOO & SVOC）の受動態徹底解説</span>
+                        <span class="lang-en hidden">Mastering Passive Voice in SVOO & SVOC Patterns</span>
+                    </h2>
+                    <p class="mt-3 text-indigo-100 text-sm sm:text-base leading-relaxed">
+                        <span class="lang-jp">能動態と受動態の関係性をビジュアルで理解しよう！「誰が」「何に」視点を置くかで語順や前置詞が変化します。</span>
+                        <span class="lang-en hidden">Understand active vs. passive voices visually! Learn how focus shifts sentence components, prepositions (to/for), and object complements.</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Core Concept 1: SVO vs Passive Core (Slide recap) -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center">
+                    <i class="fa-solid fa-arrows-rotate text-brand-600 mr-2.5"></i>
+                    <span class="lang-jp">1. 受動態の基本原理（能動態との違い）</span>
+                    <span class="lang-en hidden">1. Core Passive Voice Mechanics</span>
+                </h3>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+                    <!-- Diagram Box -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <!-- Active Sentence -->
+                        <div class="mb-4">
+                            <span class="text-xs font-bold uppercase text-slate-400 block mb-1">能動態 (Active Voice)</span>
+                            <div class="flex items-center space-x-2 text-sm sm:text-base font-mono bg-white p-3 rounded-lg border border-slate-200">
+                                <span class="px-2 py-0.5 bg-red-100 text-red-700 font-bold rounded">S (Yu Darvish)</span>
+                                <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 font-bold rounded">V (threw)</span>
+                                <span class="px-2 py-0.5 bg-blue-100 text-blue-700 font-bold rounded">O (the ball)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-center my-2 text-brand-600 text-xl">
+                            <i class="fa-solid fa-arrow-down-long animate-bounce"></i>
+                        </div>
+
+                        <!-- Passive Sentence -->
+                        <div>
+                            <span class="text-xs font-bold uppercase text-slate-400 block mb-1">受動態 (Passive Voice)</span>
+                            <div class="flex flex-wrap gap-1.5 items-center text-sm sm:text-base font-mono bg-white p-3 rounded-lg border border-slate-200">
+                                <span class="px-2 py-0.5 bg-blue-100 text-blue-700 font-bold rounded">O (The ball)</span>
+                                <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 font-bold rounded">be + Vpp (was thrown)</span>
+                                <span class="px-2 py-0.5 bg-red-100 text-red-700 font-bold rounded">by + S (by Yu Darvish)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Explanatory Text -->
+                    <div class="space-y-3 text-sm text-slate-600">
+                        <div class="p-3 bg-indigo-50 border-l-4 border-brand-600 rounded-r-lg">
+                            <strong class="text-brand-900 block font-semibold mb-1">
+                                <span class="lang-jp">なぜ受動態を使うのか？</span>
+                                <span class="lang-en hidden">Why use the Passive Voice?</span>
+                            </strong>
+                            <p class="lang-jp">動作を行った「主語(S)」よりも、動作を受けた「目的語(O)」に視点・重点を置きたい場合や、動作主が不明・一般人・明らかな場合に用いられます。</p>
+                            <p class="lang-en hidden">Used when focusing on the receiver (Object) rather than the actor (Subject), or when the actor is unknown, obvious, or general.</p>
+                        </div>
+                        <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-slate-700">
+                            <li><strong class="text-slate-900">by + 動作主:</strong> <span class="lang-jp">能動態の主語は `by + 目的格` に変化（I → by me, She → by her）</span><span class="lang-en hidden">Active Subject becomes `by + objective form` (I → by me, She → by her).</span></li>
+                            <li><strong class="text-slate-900">by の省略:</strong> <span class="lang-jp">動作主が不明・一般的・当たり前の場合は `by ...` を省略。</span><span class="lang-en hidden">`by ...` is omitted if the actor is unknown, obvious, or general.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Core Concept 2: SVOO Passive (2 Patterns & Prepositions to/for) -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center">
+                        <i class="fa-solid fa-layer-group text-brand-600 mr-2.5"></i>
+                        <span class="lang-jp">2. 第4文型（SVOO）の受動態：2つの受動態パターン</span>
+                        <span class="lang-en hidden">2. SVOO Pattern Passive: Two Transformations</span>
+                    </h3>
+                    <span class="px-2.5 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full">重要 (Crucial)</span>
+                </div>
+
+                <p class="text-sm text-slate-600 mb-6">
+                    <span class="lang-jp">SVOO（主語＋動詞＋人[O1]＋物[O2]）には目的語が2つあるため、<strong>「人」を主語にするパターン</strong>と<strong>「物」を主語にするパターン</strong>の2種類が存在します。</span>
+                    <span class="lang-en hidden">Because SVOO (Subject + Verb + Person[O1] + Thing[O2]) has two objects, it can form two distinct passive sentences depending on whether "Person" or "Thing" becomes the Subject.</span>
+                </p>
+
+                <!-- Example Box -->
+                <div class="bg-slate-900 text-white p-5 rounded-xl font-mono text-sm mb-6 shadow-inner">
+                    <div class="text-amber-400 text-xs font-bold uppercase tracking-widest mb-1">Active Voice (能動態):</div>
+                    <div class="text-base sm:text-lg font-bold mb-3">
+                        <span class="text-red-400">Brad</span> <span class="text-emerald-400">gave</span> <span class="text-blue-400">Angela</span> <span class="text-amber-300">the ring</span>.
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-slate-800">
+                        <div class="bg-slate-800 p-3 rounded-lg border border-slate-700">
+                            <span class="text-blue-400 text-xs font-bold block mb-1">Pattern A: 「人 (Angela)」が主語</span>
+                            <div class="text-sm"><strong>Angela</strong> was given <strong>the ring</strong> (by Brad).</div>
+                            <span class="text-xs text-slate-400 block mt-1">人 ＋ be動詞 ＋ 過去分詞 ＋ 物 ＋ by...</span>
+                        </div>
+                        <div class="bg-slate-800 p-3 rounded-lg border border-slate-700">
+                            <span class="text-amber-300 text-xs font-bold block mb-1">Pattern B: 「物 (The ring)」が主語</span>
+                            <div class="text-sm"><strong>The ring</strong> was given <span class="text-pink-400 font-bold">to</span> Angela (by Brad).</div>
+                            <span class="text-xs text-slate-400 block mt-1">物 ＋ be動詞 ＋ 過去分詞 ＋ <strong class="text-pink-400">to/for</strong> ＋ 人 ＋ by...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verb Classification Grid: to vs for -->
+                <h4 class="font-bold text-slate-800 text-sm mb-3">
+                    <span class="lang-jp">「物」を主語にする時の前置詞の選択規則 (to vs. for)</span>
+                    <span class="lang-en hidden">Preposition Choice for "Thing-as-Subject" (to vs. for)</span>
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- TO Verbs -->
+                    <div class="border border-blue-200 bg-blue-50/50 p-4 rounded-xl">
+                        <div class="flex items-center space-x-2 text-blue-900 font-bold mb-2">
+                            <span class="px-2 py-0.5 bg-blue-600 text-white text-xs rounded">to を使う動詞</span>
+                            <span class="text-xs text-blue-700">相手への「到達・移動」が必須の動詞</span>
+                        </div>
+                        <p class="text-xs text-slate-600 mb-2">
+                            <span class="lang-jp">相手（受け手）が存在しないと動作が成立しない動詞。</span>
+                            <span class="lang-en hidden">Verbs requiring a recipient for the action to be completed.</span>
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 text-xs font-mono font-bold text-blue-800">
+                            <span class="bg-white px-2 py-1 rounded border border-blue-200">give (あげる)</span>
+                            <span class="bg-white px-2 py-1 rounded border border-blue-200">show (見せる)</span>
+                            <span class="bg-white px-2 py-1 rounded border border-blue-200">tell (伝える)</span>
+                            <span class="bg-white px-2 py-1 rounded border border-blue-200">teach (教える)</span>
+                            <span class="bg-white px-2 py-1 rounded border border-blue-200">send (送る)</span>
+                            <span class="bg-white px-2 py-1 rounded border border-blue-200">lend (貸す)</span>
+                        </div>
+                    </div>
+
+                    <!-- FOR Verbs -->
+                    <div class="border border-amber-200 bg-amber-50/50 p-4 rounded-xl">
+                        <div class="flex items-center space-x-2 text-amber-900 font-bold mb-2">
+                            <span class="px-2 py-0.5 bg-amber-600 text-white text-xs rounded">for を使う動詞</span>
+                            <span class="text-xs text-amber-700">相手のために「準備・料理・調達」する動詞</span>
+                        </div>
+                        <p class="text-xs text-slate-600 mb-2">
+                            <span class="lang-jp">相手がいなくても一人で行える動作（※「人」を主語にする受動態は原則不可）。</span>
+                            <span class="lang-en hidden">Actions done for someone's benefit. Usually CANNOT make the "person" the passive subject!</span>
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 text-xs font-mono font-bold text-amber-800">
+                            <span class="bg-white px-2 py-1 rounded border border-amber-200">buy (買う)</span>
+                            <span class="bg-white px-2 py-1 rounded border border-amber-200">make (作る)</span>
+                            <span class="bg-white px-2 py-1 rounded border border-amber-200">cook (料理する)</span>
+                            <span class="bg-white px-2 py-1 rounded border border-amber-200">find (見つける)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-800 flex items-start space-x-2">
+                    <i class="fa-solid fa-triangle-exclamation text-red-500 text-base mt-0.5"></i>
+                    <div>
+                        <strong>注意 (Important Note):</strong> 
+                        <span class="lang-jp">`buy`, `make`, `cook` などの `for` 型動詞は、<strong>「人」を主語にした受動態を作ることができません</strong>。 (✕ I was bought a cake. → 〇 A cake was bought for me.)</span>
+                        <span class="lang-en hidden">For verbs like `buy`, `make`, and `cook`, you <strong>cannot make the Person the subject</strong> of a passive sentence!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Core Concept 3: SVOC Passive -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center">
+                    <i class="fa-solid fa-link text-brand-600 mr-2.5"></i>
+                    <span class="lang-jp">3. 第5文型（SVOC）の受動態：補語(C)の残し方</span>
+                    <span class="lang-en hidden">3. SVOC Pattern Passive: Preserving Complement (C)</span>
+                </h3>
+
+                <p class="text-sm text-slate-600 mb-4">
+                    <span class="lang-jp">SVOC（主語＋動詞＋目的語＋補語）では、目的語(O)が受動態の主語になります。<strong>補語(C)は形を変えずに動詞の直後にそのまま残ります</strong>（S' + be + Vpp + C + by S）。</span>
+                    <span class="lang-en hidden">In SVOC (Subject + Verb + Object + Complement), Object (O) becomes the passive Subject. The Complement (C) remains directly after the verb unchanged.</span>
+                </p>
+
+                <!-- SVOC Examples -->
+                <div class="space-y-3 font-mono text-xs sm:text-sm">
+                    <!-- Example 1 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                            <div class="text-xs text-slate-400 font-bold uppercase mb-0.5">Active (能動態)</div>
+                            <div>They <span class="text-emerald-600 font-bold">call</span> <span class="text-blue-600 font-bold">the girl</span> <span class="text-purple-600 font-bold">Angela</span>. (SVOC)</div>
+                        </div>
+                        <div class="text-brand-600 font-bold text-center sm:text-left"><i class="fa-solid fa-arrow-right hidden sm:inline"></i><i class="fa-solid fa-arrow-down sm:hidden"></i></div>
+                        <div>
+                            <div class="text-xs text-slate-400 font-bold uppercase mb-0.5">Passive (受動態)</div>
+                            <div><span class="text-blue-600 font-bold">The girl</span> <span class="text-emerald-600 font-bold">is called</span> <span class="text-purple-600 font-bold">Angela</span>.</div>
+                        </div>
+                    </div>
+
+                    <!-- Example 2 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                            <div class="text-xs text-slate-400 font-bold uppercase mb-0.5">Active (能動態)</div>
+                            <div>My father <span class="text-emerald-600 font-bold">named</span> <span class="text-blue-600 font-bold">me</span> <span class="text-purple-600 font-bold">Yuka</span>.</div>
+                        </div>
+                        <div class="text-brand-600 font-bold text-center sm:text-left"><i class="fa-solid fa-arrow-right hidden sm:inline"></i><i class="fa-solid fa-arrow-down sm:hidden"></i></div>
+                        <div>
+                            <div class="text-xs text-slate-400 font-bold uppercase mb-0.5">Passive (受動態)</div>
+                            <div><span class="text-blue-600 font-bold">I</span> <span class="text-emerald-600 font-bold">was named</span> <span class="text-purple-600 font-bold">Yuka</span> (by my father).</div>
+                        </div>
+                    </div>
+
+                    <!-- Example 3 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                            <div class="text-xs text-slate-400 font-bold uppercase mb-0.5">Active (能動態)</div>
+                            <div>Mike <span class="text-emerald-600 font-bold">left</span> <span class="text-blue-600 font-bold">the door</span> <span class="text-purple-600 font-bold">open</span>.</div>
+                        </div>
+                        <div class="text-brand-600 font-bold text-center sm:text-left"><i class="fa-solid fa-arrow-right hidden sm:inline"></i><i class="fa-solid fa-arrow-down sm:hidden"></i></div>
+                        <div>
+                            <div class="text-xs text-slate-400 font-bold uppercase mb-0.5">Passive (受動態)</div>
+                            <div><span class="text-blue-600 font-bold">The door</span> <span class="text-emerald-600 font-bold">was left</span> <span class="text-purple-600 font-bold">open</span> (by Mike).</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Core Concept 4: Idiomatic Passives & Phrasal Verbs -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Phrasal Verbs (群動詞) -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                    <h4 class="font-bold text-slate-900 text-base mb-3 flex items-center">
+                        <i class="fa-solid fa-puzzle-piece text-brand-600 mr-2"></i>
+                        <span class="lang-jp">群動詞の受動態 (Phrasal Verbs)</span>
+                        <span class="lang-en hidden">Passive with Phrasal Verbs</span>
+                    </h4>
+                    <p class="text-xs text-slate-600 mb-3">
+                        <span class="lang-jp">動詞＋前置詞/副詞のセットは「1つの動詞」として扱い、前置詞を落とさずに残します。</span>
+                        <span class="lang-en hidden">Treat verb + preposition/adverb combinations as a single verb unit. Do not drop the preposition!</span>
+                    </p>
+                    <div class="space-y-2 text-xs font-mono">
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+                            <strong>talk to:</strong> I was <span class="text-emerald-600 font-bold">talked to</span> by two young women.
+                        </div>
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+                            <strong>take care of:</strong> Our cats are <span class="text-emerald-600 font-bold">taken care of</span> by Mrs. Smith.
+                        </div>
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+                            <strong>look up to:</strong> Mr. Green is <span class="text-emerald-600 font-bold">looked up to</span> by a lot of students.
+                        </div>
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
+                            <strong>bring up:</strong> He was <span class="text-emerald-600 font-bold">brought up</span> by a Chinese couple.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prepositions other than BY (by 以外の前置詞) -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                    <h4 class="font-bold text-slate-900 text-base mb-3 flex items-center">
+                        <i class="fa-solid fa-tags text-brand-600 mr-2"></i>
+                        <span class="lang-jp">by 以外の前置詞を使う重要受動表現</span>
+                        <span class="lang-en hidden">Important Idiomatic Passives (No "by")</span>
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-medium">
+                        <div class="p-2 bg-indigo-50/70 text-indigo-900 rounded-lg">be known to (~に知られている)</div>
+                        <div class="p-2 bg-indigo-50/70 text-indigo-900 rounded-lg">be covered with (~でおおわれている)</div>
+                        <div class="p-2 bg-indigo-50/70 text-indigo-900 rounded-lg">be filled with (~で満たされている)</div>
+                        <div class="p-2 bg-indigo-50/70 text-indigo-900 rounded-lg">be injured in (~でけがをする)</div>
+                        <div class="p-2 bg-indigo-50/70 text-indigo-900 rounded-lg">be interested in (~に興味がある)</div>
+                        <div class="p-2 bg-indigo-50/70 text-indigo-900 rounded-lg">be surprised at (~に驚く)</div>
+                        <div class="p-2 bg-indigo-50/70 text-indigo-900 rounded-lg">be pleased with (~に喜んでいる)</div>
+                        <div class="p-2 bg-indigo-50/70 text-indigo-900 rounded-lg">be worried about (~について心配する)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 2: EXERCISES (演習問題) ================= -->
+        <section id="sec-practice" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">
+                        <span class="lang-jp">受動態 実戦演習問題</span>
+                        <span class="lang-en hidden">Passive Voice Interactive Exercises</span>
+                    </h2>
+                    <p class="text-sm text-slate-500 mt-1">
+                        <span class="lang-jp">ワークシート(UNIT 22 & 23)から抜粋された問題を解き、「解答確認」で解説をチェックしよう！</span>
+                        <span class="lang-en hidden">Solve problems selected from UNIT 22 & 23 worksheets, then click "Check Answer" for instant verification!</span>
+                    </p>
+                </div>
+                <!-- Filter Tabs for Exercises -->
+                <div class="flex flex-wrap gap-1.5 bg-slate-100 p-1.5 rounded-xl text-xs font-semibold">
+                    <button onclick="filterPractice('all')" id="filter-all" class="px-3 py-1.5 rounded-lg bg-white text-brand-600 shadow-sm">すべて (All)</button>
+                    <button onclick="filterPractice('svoo')" id="filter-svoo" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">SVOO受動態</button>
+                    <button onclick="filterPractice('svoc')" id="filter-svoc" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">SVOC受動態</button>
+                    <button onclick="filterPractice('idiom')" id="filter-idiom" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">群動詞・イディオム</button>
+                </div>
+            </div>
+
+            <!-- Problem Containers Grid -->
+            <div id="practice-questions-list" class="space-y-4">
+                <!-- Dynamically populated by JavaScript -->
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 3: GAMIFIED ARCADE (ゲーム) ================= -->
+        <section id="sec-game" class="hidden space-y-6">
+            <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+                <!-- Game Header -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6 mb-6">
+                    <div>
+                        <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">
+                            Speed Grammar Arcade
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-black mt-2 text-white">
+                            <span class="lang-jp">文型変換チャレンジ: SVOO & SVOC Active to Passive</span>
+                            <span class="lang-en hidden">Sentence Conversion Challenge: Active to Passive</span>
+                        </h2>
+                    </div>
+
+                    <!-- Game Stats Bar -->
+                    <div class="flex items-center space-x-4 bg-slate-800/80 p-3 rounded-2xl border border-slate-700 font-mono text-center">
+                        <div class="px-3">
+                            <span class="text-xs text-slate-400 block">SCORE</span>
+                            <span id="game-score" class="text-2xl font-bold text-amber-400">0</span>
+                        </div>
+                        <div class="w-px h-8 bg-slate-700"></div>
+                        <div class="px-3">
+                            <span class="text-xs text-slate-400 block">STREAK</span>
+                            <span id="game-streak" class="text-2xl font-bold text-emerald-400">0 🔥</span>
+                        </div>
+                        <div class="w-px h-8 bg-slate-700"></div>
+                        <div class="px-3">
+                            <span class="text-xs text-slate-400 block">TIME</span>
+                            <span id="game-timer" class="text-2xl font-bold text-rose-400">60s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Container Active State -->
+                <div id="game-screen-start" class="text-center py-12 max-w-xl mx-auto">
+                    <div class="w-20 h-20 mx-auto mb-6 gradient-bg rounded-3xl flex items-center justify-center text-3xl text-white shadow-lg shadow-indigo-500/30">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">能動態 → 受動態 瞬発変換ゲーム</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed mb-6">
+                        表示される能動態（SVOO/SVOC）の文章に対して、正しい受動態の文章を素早く選ぼう！コンボを重ねて高得点を目指せ！
+                    </p>
+                    <button onclick="startGame()" class="px-8 py-3.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black rounded-2xl shadow-lg shadow-amber-500/20 text-base tracking-wide transition-all transform hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-play mr-2"></i>ゲームスタート (Start Game)
+                    </button>
+                </div>
+
+                <!-- Playing Screen -->
+                <div id="game-screen-play" class="hidden max-w-2xl mx-auto py-4">
+                    <!-- Question Card -->
+                    <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 mb-6 shadow-lg text-center">
+                        <span id="game-q-category" class="inline-block px-2.5 py-1 bg-brand-500/20 text-brand-300 text-xs font-bold rounded-lg mb-2">SVOO Pattern</span>
+                        <div class="text-xs text-slate-400 uppercase tracking-widest font-mono mb-1">Active Sentence (能動態):</div>
+                        <div id="game-q-text" class="text-xl sm:text-2xl font-bold font-mono text-amber-300">
+                            Brad gave Angela the ring.
+                        </div>
+                    </div>
+
+                    <!-- Choices Grid -->
+                    <div id="game-options-grid" class="grid grid-cols-1 gap-3 font-mono text-sm">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Game Over Screen -->
+                <div id="game-screen-end" class="hidden text-center py-10 max-w-md mx-auto">
+                    <div class="text-5xl mb-4">🏆</div>
+                    <h3 class="text-2xl font-bold mb-2">GAME OVER!</h3>
+                    <p class="text-slate-400 text-sm mb-6">あなたの最終スコア (Final Score)</p>
+                    <div class="text-5xl font-black text-amber-400 font-mono mb-6" id="game-final-score">0</div>
+                    <button onclick="startGame()" class="px-6 py-3 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg transition-all">
+                        <i class="fa-solid fa-rotate-right mr-2"></i>もう一度挑戦する (Play Again)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+            <p>Grammar Station Interactive — SVOO & SVOC Passive Voice Modules</p>
+            <p class="mt-1">Designed for High School English Grammar Instruction</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        /* ================= STATE & DATA ================= */
+        let currentLang = 'jp'; // 'jp' or 'en'
+        
+        // Comprehensive Problem Dataset extracted from Word Docs (UNIT 22 & UNIT 23)
+        const exerciseData = [
+            // SVOO Problems (Unit 22 Section 5)
+            {
+                id: 1,
+                category: 'svoo',
+                title_jp: 'SVOOの受動態：My mother bought me a big birthday cake.',
+                title_en: 'SVOO Passive: My mother bought me a big birthday cake.',
+                type: 'transform',
+                active: 'My mother bought me a big birthday cake.',
+                instruction_jp: '「a big birthday cake」を主語にした受動態の文にしなさい。',
+                instruction_en: 'Rewrite into passive voice starting with "A big birthday cake".',
+                correct_answer: 'A big birthday cake was bought for me by my mother.',
+                acceptable_answers: [
+                    'A big birthday cake was bought for me by my mother.',
+                    'A big birthday cake was bought for me by my mother'
+                ],
+                explanation_jp: 'buyは「for」をとる動詞です。「物 ＋ be動詞 ＋ bought ＋ for ＋ 人 ＋ by 動作主」の形になります。※buyは人を主語にした受動態(✕ I was bought...)は原則として作れません。',
+                explanation_en: 'The verb "buy" requires "for". Structure: Thing + be + bought + for + person + by actor. (Note: You cannot make "person" the subject with buy).'
+            },
+            {
+                id: 2,
+                category: 'svoo',
+                title_jp: 'SVOOの受動態：Nana showed me some pictures.',
+                title_en: 'SVOO Passive: Nana showed me some pictures.',
+                type: 'transform',
+                active: 'Nana showed me some pictures.',
+                instruction_jp: '「I」を主語にした受動態の文にしなさい。',
+                instruction_en: 'Rewrite into passive voice starting with "I".',
+                correct_answer: 'I was shown some pictures by Nana.',
+                acceptable_answers: [
+                    'I was shown some pictures by Nana.',
+                    'I was shown some pictures by Nana'
+                ],
+                explanation_jp: 'showは「人」を主語に受動態を作ることができます。「人(I) ＋ was shown ＋ 物(some pictures) ＋ by Nana」となります。',
+                explanation_en: 'The verb "show" allows Person as Subject: I + was shown + some pictures + by Nana.'
+            },
+            {
+                id: 3,
+                category: 'svoo',
+                title_jp: 'SVOOの受動態：Ken sent Jane a Christmas card.',
+                title_en: 'SVOO Passive: Ken sent Jane a Christmas card.',
+                type: 'transform',
+                active: 'Ken sent Jane a Christmas card.',
+                instruction_jp: '「A Christmas card」を主語にした受動態の文にしなさい。',
+                instruction_en: 'Rewrite into passive voice starting with "A Christmas card".',
+                correct_answer: 'A Christmas card was sent to Jane by Ken.',
+                acceptable_answers: [
+                    'A Christmas card was sent to Jane by Ken.',
+                    'A Christmas card was sent to Jane by Ken'
+                ],
+                explanation_jp: 'sendは相手への移動を表すため「to」を用います。「A Christmas card ＋ was sent ＋ to Jane ＋ by Ken」となります。',
+                explanation_en: '"send" takes preposition "to" when Thing is subject: A Christmas card + was sent + to Jane + by Ken.'
+            },
+            {
+                id: 4,
+                category: 'svoo',
+                title_jp: 'SVOOの受動態：Mary made me this dress.',
+                title_en: 'SVOO Passive: Mary made me this dress.',
+                type: 'transform',
+                active: 'Mary made me this dress.',
+                instruction_jp: '「This dress」を主語にした受動態の文にしなさい。',
+                instruction_en: 'Rewrite into passive voice starting with "This dress".',
+                correct_answer: 'This dress was made for me by Mary.',
+                acceptable_answers: [
+                    'This dress was made for me by Mary.',
+                    'This dress was made for me by Mary'
+                ],
+                explanation_jp: 'makeは「for」を用います。「This dress ＋ was made ＋ for me ＋ by Mary」となります。',
+                explanation_en: '"make" takes preposition "for" when Thing is subject: This dress + was made + for me + by Mary.'
+            },
+
+            // SVOC Problems (Unit 23 Section 1)
+            {
+                id: 5,
+                category: 'svoc',
+                title_jp: 'SVOCの受動態：My father named me Yuka.',
+                title_en: 'SVOC Passive: My father named me Yuka.',
+                type: 'transform',
+                active: 'My father named me Yuka.',
+                instruction_jp: '「I」を主語にした受動態の文にしなさい。',
+                instruction_en: 'Rewrite into passive voice starting with "I".',
+                correct_answer: 'I was named Yuka by my father.',
+                acceptable_answers: [
+                    'I was named Yuka by my father.',
+                    'I was named Yuka by my father'
+                ],
+                explanation_jp: 'SVOCの受動態では目的語O(me)が主語(I)になり、補語C(Yuka)は動詞の直後にそのまま残ります。(I was named Yuka by my father.)',
+                explanation_en: 'In SVOC passive, Object (me) becomes Subject (I), and Complement (Yuka) remains directly after verb.'
+            },
+            {
+                id: 6,
+                category: 'svoc',
+                title_jp: 'SVOCの受動態：Mike left the door open.',
+                title_en: 'SVOC Passive: Mike left the door open.',
+                type: 'transform',
+                active: 'Mike left the door open.',
+                instruction_jp: '「The door」を主語にした受動態の文にしなさい。',
+                instruction_en: 'Rewrite into passive voice starting with "The door".',
+                correct_answer: 'The door was left open by Mike.',
+                acceptable_answers: [
+                    'The door was left open by Mike.',
+                    'The door was left open by Mike'
+                ],
+                explanation_jp: '補語の形容詞 open は過去分詞 left の直後にそのまま置きます。「The door ＋ was left ＋ open ＋ by Mike」',
+                explanation_en: 'Adjective Complement "open" remains right after the verb: The door + was left + open + by Mike.'
+            },
+            {
+                id: 7,
+                category: 'svoc',
+                title_jp: 'SVOCの受動態：We elected Sam chairperson.',
+                title_en: 'SVOC Passive: We elected Sam chairperson.',
+                type: 'transform',
+                active: 'We elected Sam chairperson.',
+                instruction_jp: '「Sam」を主語にした受動態の文にしなさい。',
+                instruction_en: 'Rewrite into passive voice starting with "Sam".',
+                correct_answer: 'Sam was elected chairperson by us.',
+                acceptable_answers: [
+                    'Sam was elected chairperson by us.',
+                    'Sam was elected chairperson by us',
+                    'Sam was elected chairperson.'
+                ],
+                explanation_jp: '目的語Samが主語になり、補語chairpersonがそのまま残ります。「Sam was elected chairperson by us.」',
+                explanation_en: 'Sam becomes Subject, complement chairperson remains: Sam was elected chairperson (by us).'
+            },
+
+            // Idioms / Phrasal Verbs (Unit 22 Section 2 & Unit 23 Section 2/3)
+            {
+                id: 8,
+                category: 'idiom',
+                title_jp: '群動詞の受動態：Mrs. Smith takes care of our cats during our summer vacation.',
+                title_en: 'Phrasal Verb Passive: Mrs. Smith takes care of our cats...',
+                type: 'transform',
+                active: 'Mrs. Smith takes care of our cats during our summer vacation.',
+                instruction_jp: '「Our cats」を主語にした受動態の文にしなさい。',
+                instruction_en: 'Rewrite starting with "Our cats".',
+                correct_answer: 'Our cats are taken care of by Mrs. Smith during our summer vacation.',
+                acceptable_answers: [
+                    'Our cats are taken care of by Mrs. Smith during our summer vacation.',
+                    'Our cats are taken care of by Mrs. Smith during our summer vacation'
+                ],
+                explanation_jp: 'take care of は群動詞なので切り離さず taken care of by ... のように of と by が並びます。時制は現在形なので are taken となります。',
+                explanation_en: 'Keep "take care of" intact: "are taken care of by Mrs. Smith". Note present tense!'
+            },
+            {
+                id: 9,
+                category: 'idiom',
+                title_jp: 'by以外の前置詞：その部屋は大勢の聴衆でいっぱいだった。',
+                title_en: 'Idiomatic Preposition: The room was filled with...',
+                type: 'fill',
+                instruction_jp: '空欄に適語を補いなさい（byは使用不可）。',
+                instruction_en: 'Fill in the blanks (Do NOT use "by").',
+                sentence_template: 'The room [1] [2] [3] a large audience.',
+                correct_answer: 'was filled with',
+                acceptable_answers: ['was filled with'],
+                explanation_jp: '「〜で満たされている」は be filled with ... を用います。過去形なので was filled with となります。',
+                explanation_en: '"Filled with" is used for "full of". Past tense: was filled with.'
+            },
+            {
+                id: 10,
+                category: 'idiom',
+                title_jp: '受動態の感情表現：( worried / is / her / she / future / about )?',
+                title_en: 'Word Order: Is she worried about her future?',
+                type: 'reorder',
+                words: ['worried', 'is', 'her', 'she', 'future', 'about'],
+                instruction_jp: '日本文「彼女は自分の将来について心配していますか。」に合うように並べ替えなさい。',
+                instruction_en: 'Reorder the words to mean "Is she worried about her future?".',
+                correct_answer: 'Is she worried about her future?',
+                acceptable_answers: ['Is she worried about her future?', 'Is she worried about her future'],
+                explanation_jp: 'be worried about ...（〜について心配している）の疑問文です。Be動詞の Is が文頭に出ます。',
+                explanation_en: 'Question form of "be worried about...": Is she worried about her future?'
+            }
+        ];
+
+        /* ================= NAVIGATION & TAB SWITCHING ================= */
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.getElementById('sec-learn').classList.add('hidden');
+            document.getElementById('sec-practice').classList.add('hidden');
+            document.getElementById('sec-game').classList.add('hidden');
+
+            // Reset desktop tab styles
+            ['learn', 'practice', 'game'].forEach(t => {
+                const btn = document.getElementById(`tab-btn-${t}`);
+                const mobBtn = document.getElementById(`mob-tab-btn-${t}`);
+                if (btn) {
+                    btn.className = "px-3 py-1.5 rounded-lg transition-all text-slate-600 hover:text-slate-900";
+                }
+                if (mobBtn) {
+                    mobBtn.className = "flex-1 py-2.5 text-slate-500 border-b-2 border-transparent";
+                }
+            });
+
+            // Show selected tab & set active styling
+            document.getElementById(`sec-${tabName}`).classList.remove('hidden');
+            
+            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            const activeMobBtn = document.getElementById(`mob-tab-btn-${tabName}`);
+            if (activeBtn) {
+                activeBtn.className = "px-3 py-1.5 rounded-lg transition-all shadow-sm bg-white text-brand-600 font-semibold";
+            }
+            if (activeMobBtn) {
+                activeMobBtn.className = "flex-1 py-2.5 border-b-2 border-brand-600 text-brand-600 font-bold";
+            }
+
+            if (tabName === 'practice') {
+                renderPracticeQuestions('all');
+            }
+        }
+
+        /* ================= BILINGUAL TOGGLE ================= */
+        function toggleLanguage() {
+            currentLang = currentLang === 'jp' ? 'en' : 'jp';
+            
+            const jpElements = document.querySelectorAll('.lang-jp');
+            const enElements = document.querySelectorAll('.lang-en');
+
+            if (currentLang === 'en') {
+                jpElements.forEach(el => el.classList.add('hidden'));
+                enElements.forEach(el => el.classList.remove('hidden'));
+                document.getElementById('lang-btn-text').innerText = '日本語 / EN';
+            } else {
+                enElements.forEach(el => el.classList.add('hidden'));
+                jpElements.forEach(el => el.classList.remove('hidden'));
+                document.getElementById('lang-btn-text').innerText = 'EN / 日本語';
+            }
+
+            // Re-render practice questions if active
+            const currentFilter = document.querySelector('[id^="filter-"].bg-white')?.id.replace('filter-', '') || 'all';
+            renderPracticeQuestions(currentFilter);
+        }
+
+        /* ================= PRACTICE EXERCISES LOGIC ================= */
+        function filterPractice(category) {
+            ['all', 'svoo', 'svoc', 'idiom'].forEach(c => {
+                const btn = document.getElementById(`filter-${c}`);
+                if (btn) {
+                    btn.className = "px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900";
+                }
+            });
+            const selectedBtn = document.getElementById(`filter-${category}`);
+            if (selectedBtn) {
+                selectedBtn.className = "px-3 py-1.5 rounded-lg bg-white text-brand-600 shadow-sm font-bold";
+            }
+            renderPracticeQuestions(category);
+        }
+
+        function renderPracticeQuestions(filterCategory = 'all') {
+            const container = document.getElementById('practice-questions-list');
+            container.innerHTML = '';
+
+            const filtered = filterCategory === 'all' 
+                ? exerciseData 
+                : exerciseData.filter(q => q.category === filterCategory);
+
+            filtered.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm transition-all";
+                
+                let inputAreaHTML = '';
+
+                if (q.type === 'transform') {
+                    inputAreaHTML = `
+                        <div class="mt-3">
+                            <label class="block text-xs font-semibold text-slate-500 mb-1">あなたの解答 (Your Answer):</label>
+                            <input type="text" id="ans-input-${q.id}" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm font-mono" placeholder="Type sentence here...">
+                        </div>
+                    `;
+                } else if (q.type === 'fill') {
+                    inputAreaHTML = `
+                        <div class="mt-3">
+                            <p class="text-sm font-mono bg-slate-50 p-3 rounded-lg border border-slate-200 mb-2">${q.sentence_template}</p>
+                            <input type="text" id="ans-input-${q.id}" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 text-sm font-mono" placeholder="例: was filled with">
+                        </div>
+                    `;
+                } else if (q.type === 'reorder') {
+                    inputAreaHTML = `
+                        <div class="mt-3">
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                ${q.words.map(w => `<span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 font-mono text-xs rounded-lg border border-indigo-200 font-bold">${w}</span>`).join('')}
+                            </div>
+                            <input type="text" id="ans-input-${q.id}" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 text-sm font-mono" placeholder="Construct sentence here...">
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="flex items-start justify-between gap-3 mb-2">
+                        <span class="px-2.5 py-0.5 bg-brand-100 text-brand-800 text-xs font-bold rounded-md uppercase">
+                            Q${index + 1} • ${q.category.toUpperCase()}
+                        </span>
+                        <button onclick="toggleAnswerExplanation(${q.id})" class="text-xs font-bold text-slate-500 hover:text-brand-600 flex items-center space-x-1 border border-slate-300 px-2.5 py-1 rounded-lg hover:bg-slate-50">
+                            <i class="fa-solid fa-key"></i>
+                            <span>解答確認 (Check Answer)</span>
+                        </button>
+                    </div>
+
+                    <h3 class="text-base font-bold text-slate-900 mb-1">
+                        ${currentLang === 'jp' ? q.title_jp : q.title_en}
+                    </h3>
+                    <p class="text-xs text-slate-600 mb-2">
+                        ${currentLang === 'jp' ? q.instruction_jp : q.instruction_en}
+                    </p>
+
+                    ${inputAreaHTML}
+
+                    <!-- Feedback & Explanation Box (Initially Hidden) -->
+                    <div id="explanation-box-${q.id}" class="hidden mt-4 p-4 rounded-xl text-xs sm:text-sm space-y-2 border">
+                        <div class="flex items-center space-x-2 font-bold" id="result-status-${q.id}">
+                            <!-- Correct / Incorrect Status populated dynamically -->
+                        </div>
+                        <div>
+                            <strong class="text-slate-800 block mb-0.5">正解 (Correct Answer):</strong>
+                            <div class="font-mono text-emerald-700 font-bold bg-emerald-50 p-2 rounded border border-emerald-200">${q.correct_answer}</div>
+                        </div>
+                        <div class="text-slate-600 pt-1 border-t border-slate-200">
+                            <strong class="text-slate-800">解説 (Explanation):</strong>
+                            <p class="mt-0.5">${currentLang === 'jp' ? q.explanation_jp : q.explanation_en}</p>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function toggleAnswerExplanation(id) {
+            const box = document.getElementById(`explanation-box-${id}`);
+            const input = document.getElementById(`ans-input-${id}`);
+            const statusEl = document.getElementById(`result-status-${id}`);
+            
+            const q = exerciseData.find(item => item.id === id);
+            if (!q) return;
+
+            const userAns = (input ? input.value : '').trim().toLowerCase().replace(/\s+/g, ' ');
+            const isCorrect = q.acceptable_answers.some(ans => ans.toLowerCase() === userAns);
+
+            if (box.classList.contains('hidden')) {
+                box.classList.remove('hidden');
+                
+                if (userAns.length > 0) {
+                    if (isCorrect) {
+                        box.className = "mt-4 p-4 rounded-xl text-xs sm:text-sm space-y-2 border bg-emerald-50/60 border-emerald-200";
+                        statusEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-base"></i><span class="text-emerald-800">正解です！ Great job!</span>`;
+                    } else {
+                        box.className = "mt-4 p-4 rounded-xl text-xs sm:text-sm space-y-2 border bg-amber-50/60 border-amber-200";
+                        statusEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-amber-600 text-base"></i><span class="text-amber-800">惜しい！下記の解答と解説を確認しましょう。</span>`;
+                    }
+                } else {
+                    box.className = "mt-4 p-4 rounded-xl text-xs sm:text-sm space-y-2 border bg-slate-50 border-slate-200";
+                    statusEl.innerHTML = `<i class="fa-solid fa-circle-info text-brand-600 text-base"></i><span class="text-brand-900">解答と解説 (Answer & Explanation)</span>`;
+                }
+            } else {
+                box.classList.add('hidden');
+            }
+        }
+
+        /* ================= ARCADE GAME LOGIC ================= */
+        const gameQuestions = [
+            {
+                category: 'SVOO (to-type)',
+                active: 'Mr. Evans teaches us English.',
+                options: [
+                    'We are taught English by Mr. Evans.',
+                    'English is taught for us by Mr. Evans.',
+                    'We were taught English by Mr. Evans.',
+                    'Us are taught English by Mr. Evans.'
+                ],
+                correct: 0
+            },
+            {
+                category: 'SVOO (for-type)',
+                active: 'Mary made me this dress.',
+                options: [
+                    'I was made this dress by Mary.',
+                    'This dress was made for me by Mary.',
+                    'This dress is made to me by Mary.',
+                    'This dress made for me by Mary.'
+                ],
+                correct: 1
+            },
+            {
+                category: 'SVOC Pattern',
+                active: 'They call the girl Angela.',
+                options: [
+                    'The girl called Angela by them.',
+                    'Angela is called the girl by them.',
+                    'The girl is called Angela.',
+                    'The girl was called Angela.'
+                ],
+                correct: 2
+            },
+            {
+                category: 'Phrasal Verb',
+                active: 'Two young women talked to me.',
+                options: [
+                    'I was talked to by two young women.',
+                    'I was talked by two young women.',
+                    'Me was talked to by two young women.',
+                    'I talked to two young women.'
+                ],
+                correct: 0
+            },
+            {
+                category: 'SVOC Pattern',
+                active: 'Mike left the door open.',
+                options: [
+                    'The door was left open by Mike.',
+                    'The door left open by Mike.',
+                    'Open was left the door by Mike.',
+                    'The door is left open by Mike.'
+                ],
+                correct: 0
+            },
+            {
+                category: 'SVOO (to-type)',
+                active: 'Ken sent Jane a Christmas card.',
+                options: [
+                    'A Christmas card was sent for Jane by Ken.',
+                    'Jane was sent a Christmas card to Ken.',
+                    'A Christmas card was sent to Jane by Ken.',
+                    'A Christmas card is sent to Jane by Ken.'
+                ],
+                correct: 2
+            }
+        ];
+
+        let gameScore = 0;
+        let gameStreak = 0;
+        let gameTimeLeft = 60;
+        let gameTimerId = null;
+        let currentGameQIndex = 0;
+
+        function startGame() {
+            gameScore = 0;
+            gameStreak = 0;
+            gameTimeLeft = 60;
+            currentGameQIndex = 0;
+
+            document.getElementById('game-score').innerText = gameScore;
+            document.getElementById('game-streak').innerText = `${gameStreak} 🔥`;
+            document.getElementById('game-timer').innerText = `${gameTimeLeft}s`;
+
+            document.getElementById('game-screen-start').classList.add('hidden');
+            document.getElementById('game-screen-end').classList.add('hidden');
+            document.getElementById('game-screen-play').classList.remove('hidden');
+
+            // Shuffle questions
+            gameQuestions.sort(() => Math.random() - 0.5);
+
+            loadGameQuestion();
+
+            clearInterval(gameTimerId);
+            gameTimerId = setInterval(() => {
+                gameTimeLeft--;
+                document.getElementById('game-timer').innerText = `${gameTimeLeft}s`;
+                if (gameTimeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function loadGameQuestion() {
+            if (currentGameQIndex >= gameQuestions.length) {
+                currentGameQIndex = 0; // loop questions
+            }
+
+            const q = gameQuestions[currentGameQIndex];
+            document.getElementById('game-q-category').innerText = q.category;
+            document.getElementById('game-q-text').innerText = q.active;
+
+            const grid = document.getElementById('game-options-grid');
+            grid.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl bg-slate-700/60 hover:bg-slate-700 border border-slate-600 transition-all font-sans font-medium text-slate-100 flex items-center justify-between group";
+                btn.onclick = () => handleGameAnswer(idx);
+                btn.innerHTML = `
+                    <span>${opt}</span>
+                    <i class="fa-solid fa-chevron-right text-xs opacity-0 group-hover:opacity-100 text-amber-400 transition-all"></i>
+                `;
+                grid.appendChild(btn);
+            });
+        }
+
+        function handleGameAnswer(selectedIdx) {
+            const q = gameQuestions[currentGameQIndex];
+
+            if (selectedIdx === q.correct) {
+                gameStreak++;
+                gameScore += 100 + (gameStreak * 20);
+                document.getElementById('game-score').innerText = gameScore;
+                document.getElementById('game-streak').innerText = `${gameStreak} 🔥`;
+            } else {
+                gameStreak = 0;
+                document.getElementById('game-streak').innerText = `0 🔥`;
+            }
+
+            currentGameQIndex++;
+            loadGameQuestion();
+        }
+
+        function endGame() {
+            clearInterval(gameTimerId);
+            document.getElementById('game-screen-play').classList.add('hidden');
+            document.getElementById('game-screen-end').classList.remove('hidden');
+            document.getElementById('game-final-score').innerText = gameScore;
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            switchTab('learn');
+        };
+    </script>
+</body>
+</html>
